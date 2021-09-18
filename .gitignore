@@ -1,3 +1,5 @@
 /node_modules
 /reactfrontend/react
 /reactfrontend/src
+Pipfile
+Pipfile.lock
