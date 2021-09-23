@@ -6,6 +6,7 @@ module.exports = {
     module: {
        
         rules: [
+           
             {
                 test: [/\.ttf$/],
                 use: [{ loader: 'file-loader'}]
@@ -20,14 +21,14 @@ module.exports = {
                 
             },
             {
-                test: [/\.css$/],
+                test: [/\.css$/i],
                 exclude: /node_modules/,
                 use: [
-                 
-                    {loader:"css-loader"}
+                 "css-loader"
                 ]
                 
-            }
+            },
+           
         ]
     },
     node: {

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack --mode development  ./reactfrontend/src/index.js --output-path ./reactfrontend/static/reactfrontend",
     "devnew": "webpack --mode development  ./reactfrontend/react/src/index.js --output-path ./reactfrontend/static/reactfrontend",
-    "build": "webpack --mode production  ./reactfrontend/src/index.js --output-path ./reactfrontend/static/reactfrontend",
+    "build": "webpack --mode production  ./reactfrontend/react/src/index.js --output-path ./reactfrontend/static/reactfrontend",
     "start": "react-scripts start"
   },
   "keywords": [],
@@ -22,7 +22,7 @@
     "axios": "^0.21.1",
     "babel-loader": "^8.2.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "css-loader": "^6.2.0",
+    "css-loader": "^6.3.0",
     "object-hash": "^2.2.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
