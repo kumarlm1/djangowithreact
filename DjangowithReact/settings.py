@@ -18,7 +18,7 @@ SECRET_KEY = 'django-insecure-x(z#pxw_u2ls294do1l-ehbmkhsu7fli&5ypsb4&%(-f8ur+=o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1','.herokuapp.com']
 
 
 # Application definition
@@ -81,6 +81,17 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+    #   "default":{
+    #     'ENGINE':'djongo',
+    #     'CONN_MAX_AGE':None,
+    #     'CLIENT':{
+    #     'host': 'mongodb://kumardb:uuzjSDYhN8OrdbEj@cluster0-shard-00-00.subzv.gcp.mongodb.net:27017,cluster0-shard-00-01.subzv.gcp.mongodb.net:27017,cluster0-shard-00-02.subzv.gcp.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority',
+    #     'username': 'kumardb',
+    #     'password': 'uuzjSDYhN8OrdbEj',
+    #     'authMechanism': 'SCRAM-SHA-1',
+       
+    #     }
+    #   }
 }
 
 
