@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 // importing plugins that do not come by default in webpack
 
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 module.exports = {
   
     module: {
@@ -64,6 +65,11 @@ module.exports = {
       plugins :[ new webpack.ProvidePlugin({
         Buffer: ['buffer', 'Buffer'],
         process: 'process/browser',
+      })
+      ,
+    //   new UglifyJSPlugin(),
+      new webpack.DefinePlugin({
+          'process.env.NODE_ENV' : JSON.stringify('production'),
       })
     ],
 };
