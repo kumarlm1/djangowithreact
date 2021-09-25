@@ -65,8 +65,7 @@ module.exports = {
       plugins :[ new webpack.ProvidePlugin({
         Buffer: ['buffer', 'Buffer'],
         process: 'process/browser',
-      })
-      ,
+      }),
     //   new UglifyJSPlugin(),
       new webpack.DefinePlugin({
           'process.env.NODE_ENV' : JSON.stringify('production'),
