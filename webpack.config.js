@@ -1,11 +1,15 @@
 var webpack = require('webpack');
 // importing plugins that do not come by default in webpack
-
+const CompressionPlugin = require("compression-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 module.exports = {
- 
+  entry: {
+    'main': './src/index.js',
+},
     module: {
-       
+      
         rules: [
            
             {
@@ -15,12 +19,10 @@ module.exports = {
             {
                 test: [/\.js$/],
                 exclude: /node_modules/,
-                use: [
-                    {loader: "babel-loader"},
-                   
-                ]
-                
-            },
+                use: 
+                    {
+                      loader: "babel-loader",
+                    }},
             {
                 test: [/\.css$/i],
                 exclude: /node_modules/,
@@ -36,6 +38,11 @@ module.exports = {
         global: true
       },
     resolve: {
+      
+      alias: {
+        // "react": "preact-compat",
+        // "react-dom": "preact-compat"
+      },
         fallback: {
             assert: require.resolve('assert'),
             buffer: require.resolve('buffer'),
@@ -62,13 +69,42 @@ module.exports = {
             zlib: require.resolve('browserify-zlib'),
         }
       },
-      plugins :[ new webpack.ProvidePlugin({
+      plugins :[
+        new CompressionPlugin(),
+        new webpack.DefinePlugin({
+          'process.env': {
+            'NODE_ENV': JSON.stringify('production')
+          }
+        }),
+        
+        new webpack.ProvidePlugin({
         Buffer: ['buffer', 'Buffer'],
         process: 'process/browser',
       }),
-    //   new UglifyJSPlugin(),
-      new webpack.DefinePlugin({
-          'process.env.NODE_ENV' : JSON.stringify('production'),
-      })
+    //   new webpack.optimize.AggressiveMergingPlugin() ,
+    
+     new UglifyJSPlugin(),
+    new BundleAnalyzerPlugin(),
+    new webpack.IgnorePlugin(/^\.\/locals$/,/moment$/),
+    
     ],
+    optimization: {
+      minimize: true,
+      minimizer: [new TerserPlugin()],
+    },
+    // optimization: {
+    //   minimizer: [
+    //     // we specify a custom UglifyJsPlugin here to get source maps in production
+    //     new UglifyJSPlugin({
+    //       cache: true,
+    //       parallel: true,
+    //       uglifyOptions: {
+    //         compress: false,
+    //         ecma: 6,
+    //         mangle: true
+    //       },
+    //       sourceMap: true
+    //     })
+    //   ]
+    // }
 };
