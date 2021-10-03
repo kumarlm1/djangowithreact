@@ -30,7 +30,7 @@ class Lession(models.Model):
     tabs = models.ManyToManyField(Tab)
     name =  models.CharField(max_length=250)  
     description = models.TextField(null=True,blank=True)
-    division = models.ForeignKey(Category,on_delete=models.CASCADE)
+    division = models.ForeignKey(Category,on_delete=models.RESTRICT)
     
     @property
     def getdivision(self):
@@ -41,14 +41,14 @@ class Lession(models.Model):
     class Meta:    
         unique_together = ['name','division']
     def __str__(self):
-        return f'{self.name} || {self.division.name}'
+        return f'{self.name} || {self.id}'
     def get_absolute_url(self):
         return reverse("createlession")
         
 class Question(models.Model):
     
-    tab = models.ForeignKey(Tab,on_delete=models.CASCADE,blank=False,default=1)
-    lession = models.ForeignKey(Lession,on_delete=models.CASCADE,blank=False,default=1)
+    tab = models.ManyToManyField(Tab)
+    lession = models.ManyToManyField(Lession)
     question = models.TextField(blank=True)
     answer = models.TextField(blank=True)
     
@@ -56,7 +56,7 @@ class Question(models.Model):
     class Meta:
         unique_together=['question','answer']
     def __str__(self):
-        return self.question
+        return str(self.id)
 
     def get_absolute_url(self):
         return reverse("createquestion")

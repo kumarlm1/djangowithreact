@@ -15,6 +15,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
 def index(request,lession,tab):
+    
     try:
         excel_file = request.FILES["excel_file"]
         wb = openpyxl.load_workbook(excel_file)
@@ -26,7 +27,7 @@ def index(request,lession,tab):
             for cell in row:
                 data.append(str(cell.value))
             try:    
-                Question.objects.create(lession=lession,tab=tab,question=data[0],answer=data[1])
+                Question.objects.update_or_create(lession=lession,tab=tab,question=data[0],answer=data[1])
             except :   
                 print('Already exist') 
     except:
@@ -101,23 +102,27 @@ class QuestionWithExcelCreateView(LoginRequiredMixin,View):
     form_class = QuestionForm
     initial = {}
     login_url = '/accounts/login/'
-    def get_form_kwargs(self):
-        kwargs = super(QuestionWithExcelCreateView, self).get_form_kwargs()
-        kwargs['request'] = self.request
-        return kwargs
     def get(self,request):
         form = self.form_class(initial=self.initial,request=self.request)
         return render(request, 'main/uploadquestion.html', {'form':form})
     def post(self,request):
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST,request=self.request)
         if form.is_valid():
             if (form.cleaned_data['question'].strip() != '' and form.cleaned_data['answer'].strip() != ''):
                 form.save()
+              
             lession=form.cleaned_data['lession']
-            tab = form.cleaned_data['tab']
-            index(request,lession,tab)
+            tabs = form.cleaned_data['tab']
+            les = [ i.id for i in lession]
+            tab = [ i.id for i in tabs]
+            qns = Question.objects.update_or_create(question='questiontest',answer='answer')
+            qn = Question.objects.get(pk=qns.id)
+            qns.lession.add(*les)
+            qns.tab.add(*tab)
 
-        return HttpResponseRedirect('/')    
+            #index(request,lession,tab)
+
+        return HttpResponseRedirect('/api/add/question')    
 
 
 class TabCreateView(LoginRequiredMixin,CreateView):
