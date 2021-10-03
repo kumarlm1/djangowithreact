@@ -1,0 +1,305 @@
+<html>
+{% load static%}
+    <head>
+        <title>
+            {%block title%}{% endblock%}
+        </title>
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script> {% endcomment %}
+     <link href="{% static "main/bootstrap.min.css" %}" rel="stylesheet" >
+<script src= "{% static "main/bootstrap.min.js" %}"   ></script>
+
+
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>  
+        <link
+    
+    rel="stylesheet"
+    href="{% static "main/semantic.min.css" %}"
+  /> 
+         {% load static%}   
+<link rel="stylesheet" type="text/css" href="{% static 'reactfrontend/styles1.css' %}"> 
+    </head>
+ <body style="margin-top: 30px;margin-left: 30px;">
+
+  <style>
+
+
+        body {
+            height: 100%;
+        }
+
+        @media only screen and (max-width: 768px) {
+
+            /* For mobile phones: */
+            [class*="col-"] {
+                width: 100%;
+            }
+        }
+
+        @media only screen and (min-width: 600px) {
+
+            /* For tablets: */
+            .col-s-1 {
+                width: 8.33%;
+            }
+
+            .col-s-2 {
+                width: 16.66%;
+            }
+
+            .col-s-3 {
+                width: 25%;
+            }
+
+            .col-s-4 {
+                width: 33.33%;
+            }
+
+            .col-s-5 {
+                width: 41.66%;
+            }
+
+            .col-s-6 {
+                width: 50%;
+            }
+
+            .col-s-7 {
+                width: 58.33%;
+            }
+
+            .col-s-8 {
+                width: 66.66%;
+            }
+
+            .col-s-9 {
+                width: 75%;
+            }
+
+            .col-s-10 {
+                width: 83.33%;
+            }
+
+            .col-s-11 {
+                width: 91.66%;
+            }
+
+            .col-s-12 {
+                width: 100%;
+            }
+        }
+
+        @media only screen and (min-width: 768px) {
+
+            /* For desktop: */
+            .col-1 {
+                width: 8.33%;
+            }
+
+            .col-2 {
+                width: 16.66%;
+            }
+
+            .col-3 {
+                width: 25%;
+            }
+
+            .col-4 {
+                width: 33.33%;
+            }
+
+            .col-5 {
+                width: 41.66%;
+            }
+
+            .col-6 {
+                width: 50%;
+            }
+
+            .col-7 {
+                width: 58.33%;
+            }
+
+            .col-8 {
+                width: 66.66%;
+            }
+
+            .col-9 {
+                width: 75%;
+            }
+
+            .col-10 {
+                width: 83.33%;
+            }
+
+            .col-11 {
+                width: 91.66%;
+            }
+
+            .col-12 {
+                width: 100%;
+            }
+        }
+
+        .navbar {
+            display: flex;
+        }
+
+
+
+
+        .navbar {
+    transition: all 0.4s;
+}
+
+.navbar .nav-link {
+    color: #fff;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+    color: #fff;
+    text-decoration: none;
+}
+
+.navbar .navbar-brand {
+    color: #fff;
+}
+
+
+/* Change navbar styling on scroll */
+.navbar.active {
+    background: #fff;
+    box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar.active .nav-link {
+    color: #555;
+}
+
+.navbar.active .nav-link:hover,
+.navbar.active .nav-link:focus {
+    color: #555;
+    text-decoration: none;
+}
+
+.navbar.active .navbar-brand {
+    color: #555;
+}
+
+
+/* Change navbar styling on small viewports */
+@media (max-width: 991.98px) {
+    .navbar {
+        background: #fff;
+    }
+
+    .navbar .navbar-brand, .navbar .nav-link {
+        color: #555;
+    }
+}
+
+
+
+/*
+*
+* ==========================================
+* FOR DEMO PURPOSES
+* ==========================================
+*
+*/
+.text-small {
+    font-size: 0.9rem !important;
+}
+
+
+
+
+    </style>
+<script>
+$(function () {
+    $(window).on('scroll', function () {
+        if ( $(window).scrollTop() > 10 ) {
+            $('.navbar').addClass('active');
+        } else {
+            $('.navbar').removeClass('active');
+        }
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+<header class="header">
+    <nav class="navbar navbar-expand-lg fixed-top py-3">
+        <div class="container"><a href="#" class="navbar-brand text-uppercase font-weight-bold">Hi {{ user.username}}</a>
+            <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"><i class="fa fa-bars"></i></button>
+            
+            <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active"><a href="#" class="nav-link text-uppercase font-weight-bold">Home <span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item"><a href="#" class="nav-link text-uppercase font-weight-bold">About</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link text-uppercase font-weight-bold">Gallery</a></li>
+
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                     Account
+                         </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                       <li><a class="dropdown-item" href="{% url 'userupdate' %}" target="_blank">details</a></li>
+                       {% if user.is_authenticated%}
+                        <li><a class="dropdown-item"  href="{% url 'account_logout' %}" >Logout</a></li>
+                    {%endif%}
+                    </ul>
+
+
+
+                   
+
+                      <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                     Create
+                         </a>
+                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                       <li><a class="dropdown-item" href="{% url 'createcategory' %}" target="_blank">category</a></li>
+                       <li><a class="dropdown-item" href="{% url 'createquestion' %}" target="_blank">question</a></li>
+                       <li><a class="dropdown-item" href="{% url 'createtab' %}" target="_blank">tab</a></li>
+                       <li><a class="dropdown-item" href="{% url 'createlession' %}" target="_blank">lession</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                     
+                     </ul>
+                     </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+
+
+
+<main>
+
+    <div class="container-fluid">
+ <div class="row">
+    <div class="col bacc">
+      Add
+    </div>
+    <div class="col-11 expand">
+     
+    {%block content%}{% endblock%}
+     
+    </div>
+</div>
+</div>
+</main>
+</body>
+</html>
+
+

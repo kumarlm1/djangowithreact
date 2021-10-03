@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 # Create your models here.
 class Category(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    useremail = models.EmailField(max_length=254,null=False)
     name = models.CharField(max_length=10,unique=True)
     description = models.CharField(max_length=250)
 
@@ -15,18 +15,19 @@ class Category(models.Model):
 
 
 class Tab(models.Model):
+    useremail = models.EmailField(max_length=254,null=False)
     name = models.CharField(max_length=50,null=False,blank=False)
     description = models.TextField(blank=True,null=True)
-    #setupFk = models.ForeignKey(Setup,on_delete = models.CASCADE,null=True)
     
     class Meta:
         unique_together = ['name']
         
 
     def __str__(self):
-        return '{0}'.format(self.name)
+        return '{0} - {1}'.format(self.pk,self.name)
 
 class Lession(models.Model):
+    tabs = models.ManyToManyField(Tab)
     name =  models.CharField(max_length=250)  
     description = models.TextField(null=True,blank=True)
     division = models.ForeignKey(Category,on_delete=models.CASCADE)
@@ -45,8 +46,9 @@ class Lession(models.Model):
         return reverse("createlession")
         
 class Question(models.Model):
-    lession = models.ForeignKey(Lession,on_delete=models.CASCADE,blank=False,default=1)
+    
     tab = models.ForeignKey(Tab,on_delete=models.CASCADE,blank=False,default=1)
+    lession = models.ForeignKey(Lession,on_delete=models.CASCADE,blank=False,default=1)
     question = models.TextField(blank=True)
     answer = models.TextField(blank=True)
     

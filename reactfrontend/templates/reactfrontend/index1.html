@@ -3,6 +3,11 @@
 <title>ffdfdsfdfdf</title>
 </head>
 <body>
+{% if user.is_authenticated%}
+    
+{% else %}
 <h1>Hi this is my first page</h1>
+<a href="{% url 'account_login' %}"> Login  </a>
+{% endif %}
 </body>
 </html>

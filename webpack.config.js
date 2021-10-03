@@ -14,6 +14,7 @@ module.exports = {
            
             {
                 test: [/\.ttf$/],
+               
                 use: [{ loader: 'file-loader'}]
               },
             {
@@ -25,9 +26,10 @@ module.exports = {
                     }},
             {
                 test: [/\.css$/i],
-                exclude: /node_modules/,
+                
                 use: [
-                 "css-loader"
+                  'style-loader',
+                  'css-loader'
                 ]
                 
             },
@@ -81,11 +83,12 @@ module.exports = {
         Buffer: ['buffer', 'Buffer'],
         process: 'process/browser',
       }),
+   
     //   new webpack.optimize.AggressiveMergingPlugin() ,
     
-     new UglifyJSPlugin(),
-    new BundleAnalyzerPlugin(),
-    new webpack.IgnorePlugin(/^\.\/locals$/,/moment$/),
+    //  new UglifyJSPlugin(),
+   // new BundleAnalyzerPlugin(),
+    // new webpack.IgnorePlugin(/^\.\/locals$/,/moment$/),
     
     ],
     optimization: {

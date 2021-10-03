@@ -1,0 +1,92 @@
+{% extends "main/base.html" %}
+{%block content%}
+     <form action="{% url "myapp" %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+                {% for field in form %}
+                    <div class="row">
+                    <div class="col-md-10 pull-left ">
+                     {{ field.label_tag }}
+                     {{ field }}
+                     
+                     </div>
+                    </div>
+                    <br>
+                 {% endfor %}
+                <input  type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="image_uploads"
+                   title="Upload excel file"
+                   name="excel_file"
+                   style="border: 1px solid black; padding: 5px;"
+                   > <p>* .xlsx , .xls only supported.</p>
+
+                   <br>
+                    <div class="preview">
+                    <p>No files currently selected for upload</p>
+                    </div>
+              <center>  <input class="btn btn-primary btn-lg " type="submit"id="upload" aria-disabled="true"value="Upload"
+                   style="border: 1px solid green; padding:5px; border-radius: 2px; cursor: pointer;"></center>
+        </form>
+     <script>
+       const input = document.querySelector('#image_uploads');
+        const preview = document.querySelector('.preview');
+       
+        input.addEventListener('change', updateImageDisplay);
+
+        function updateImageDisplay() {
+            
+             while(preview.firstChild) {
+             preview.removeChild(preview.firstChild); }
+
+  const curFiles = input.files;
+  if(curFiles.length === 0) {
+    const para = document.createElement('p');
+    para.textContent = 'No files currently selected for upload';
+    preview.appendChild(para);
+  } else {
+    const list = document.createElement('ol');
+    preview.appendChild(list);
+
+    for(const file of curFiles) {
+      const listItem = document.createElement('li');
+      const para = document.createElement('p');
+      if(validFileType(file)) {
+        $('#upload').removeClass("disabled");
+        para.textContent = `File name ${file.name}, file size ${returnFileSize(file.size)}.`;
+        const image = document.createElement('embed');
+        previews.src = URL.createObjectURL(file);
+        
+        listItem.appendChild(image);
+        listItem.appendChild(para);
+      } 
+      else {
+        $('#upload').addClass("disabled");
+        para.textContent = `${file.name}: Not a valid file type. Update your selection.`;
+        listItem.appendChild(para);
+      }
+
+      list.appendChild(listItem);
+    }
+  }
+}
+
+// https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types
+const fileTypes = [
+"application/vnd.ms-excel",
+"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" 
+];
+
+function validFileType(file) {
+    console.log(file.type)
+  return fileTypes.includes(file.type);
+}
+
+function returnFileSize(number) {
+  if(number < 1024) {
+    return number + 'bytes';
+  } else if(number >= 1024 && number < 1048576) {
+    return (number/1024).toFixed(1) + 'KB';
+  } else if(number >= 1048576) {
+    return (number/1048576).toFixed(1) + 'MB';
+  }
+}
+</script>
+   {%endblock%}

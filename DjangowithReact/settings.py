@@ -49,6 +49,14 @@ INSTALLED_APPS = [
     'reactfrontend',
     'corsheaders',
     'whitenoise.runserver_nostatic',
+     "django.contrib.sites",
+      "crispy_forms",
+    "allauth",
+    "allauth.account",   
+    "allauth.socialaccount",   
+    "allauth.socialaccount.providers.google",
+    'widget_tweaks',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -68,7 +76,7 @@ ROOT_URLCONF = 'DjangowithReact.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates', 'account')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -94,9 +102,9 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db1.sqlite3',
     },
-      "default1":{
+      "mongodb":{
         'ENGINE':'djongo',
         'CONN_MAX_AGE':None,
         'CLIENT':{
@@ -176,3 +184,25 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+ACCOUNT_LOGOUT_REDIRECT_URL ="/"
+LOGIN_REDIRECT_URL = '/profile'
+SITE_ID = 1
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
