@@ -62,6 +62,7 @@ module.exports = {
             querystring: require.resolve('querystring-es3'),
             stream: require.resolve('stream-browserify'),
             string_decoder: require.resolve('string_decoder'),
+            fs: false,
             sys: require.resolve('util'),
             timers: require.resolve('timers-browserify'),
             tty: require.resolve('tty-browserify'),

@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 def SimpleReactView(request):
     if request.user.is_authenticated:
-        response = redirect('djangowithreact:profile')
+        response = redirect('/profile')
         return response
     return render(request,'reactfrontend/index1.html')
 @login_required(login_url='/accounts/login/')

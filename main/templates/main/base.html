@@ -12,21 +12,17 @@
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
          {% load static%}   
-<link rel="stylesheet" type="text/css" href="{% static 'reactfrontend/styles.css' %}"> 
-    </head>
- <body style="margin-top: 30px;margin-left: 30px;">
+<link rel="stylesheet" type="text/css" href="{% static 'reactfrontend/styles1.css' %}"> 
+   
+
  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
-
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}"> {% endcomment %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
-
-
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
 <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+ </head>
 
-
-
+ <body>
   <style>
 
 
@@ -204,15 +200,6 @@
     }
 }
 
-
-
-/*
-*
-* ==========================================
-* FOR DEMO PURPOSES
-* ==========================================
-*
-*/
 .text-small {
     font-size: 0.9rem !important;
 }
@@ -220,8 +207,7 @@
 
 body {
     min-height: 110vh;
-    background-color: #4ca1af;
-    background-image: linear-gradient(135deg, #4ca1af 0%, #c4e0e5 100%);
+
 }
 header{
       position: fixed;
@@ -278,26 +264,12 @@ $(function () {
 
 <main>
 
-
- <div class="row">
+<div class="container-fluid" >
+ <div class="row" >
     <div class="col-8">
          <div class="container">
 
-<script>
-$(document).ready(function(){
 
-
-$("#choices-multiple-remove-button").width(50)
-var multipleCancelButton = new Choices('#choices-multiple-remove-button', {
-removeItemButton: true,
-//maxItemCount:5,
-//searchResultLimit:5,
-//renderChoiceLimit:5
-});
-
-
-});
-</script>
 
     {%block content%}{% endblock%}
      </div>
@@ -307,7 +279,7 @@ removeItemButton: true,
       Column
     </div>
 </div>
-
+</div>
 </main>
 </body>
 </html>

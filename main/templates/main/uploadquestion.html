@@ -88,5 +88,24 @@ function returnFileSize(number) {
     return (number/1048576).toFixed(1) + 'MB';
   }
 }
+
+$(document).ready(function(){
+
+var multipleCancelButton = new Choices('.choices-multiple', {
+removeItemButton: true,
+//maxItemCount:5,
+//searchResultLimit:5,
+//renderChoiceLimit:5
+});
+
+
+});
 </script>
-   {%endblock%}
+{% if tab and lession %}
+<script>
+$('#tab option[value={{tab}}]').attr('selected','selected');
+$('#lession option[value={{lession}}]').attr('selected','selected');
+</script>
+{% endif %}
+
+{%endblock%}

@@ -9,13 +9,20 @@ from django.views import View
 from django.db.models import CharField
 from django.db.models.functions import Substr
 
-from .forms import QuestionForm,LessionForm
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+
+from .forms import QuestionForm,LessionForm,UserUpdateForm
 from .models import Lession,Question,Category,Tab
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
-def index(request,lession,tab):
-    
+def CreateQuestionFromExcel(request,lession,tabs):
+    les = [ i.id for i in lession]
+    tab = [ i.id for i in tabs]
+    print(les,tab)
+
     try:
         excel_file = request.FILES["excel_file"]
         wb = openpyxl.load_workbook(excel_file)
@@ -25,11 +32,24 @@ def index(request,lession,tab):
         for row in worksheet.iter_rows():
             data=list()
             for cell in row:
-                data.append(str(cell.value))
-            try:    
-                Question.objects.update_or_create(lession=lession,tab=tab,question=data[0],answer=data[1])
-            except :   
-                print('Already exist') 
+                if( cell.value != None):
+                    data.append(str(cell.value))   
+            if(len(data) == 2):
+                try:  
+                      
+                    pks,isCreated = Question.objects.get_or_create(question=data[0],answer=data[1])
+                    print(pks)
+                    if isCreated:
+                        print("create")
+                       
+                    # qns = Question.objects.get(pk=pks)
+                    print(pks) 
+                    pks.lession.add(*les)
+                    pks.tab.add(*tab)
+                except :   
+                    print('Already exist') 
+            else:
+                print('Empty cell')        
     except:
         print('error')
 
@@ -77,7 +97,8 @@ def listTabLessions(request,tpk):
             data = 'no such tab'
         
     else:
-        data=''
+        tab = Tab.objects.get(pk=tpk)
+        data = list(tab.lession_set.all().values('id','name','division__name','description').order_by('division'))
     return JsonResponse({'result':data},safe=False)
 
 
@@ -98,29 +119,40 @@ class CategoryCreateView(LoginRequiredMixin,CreateView):
         context["name"] = self.__class__.__name__
         return context        
 
+
+def PasswordResetWithOldPass(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('change_password')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'userprofile/index.html', {'form': form})
+
+
 class QuestionWithExcelCreateView(LoginRequiredMixin,View):
     form_class = QuestionForm
     initial = {}
     login_url = '/accounts/login/'
-    def get(self,request):
+    def get(self,request,tpk=None,lpk=None):
         form = self.form_class(initial=self.initial,request=self.request)
-        return render(request, 'main/uploadquestion.html', {'form':form})
+        if tpk and lpk == None:
+            return render(request, 'main/uploadquestion.html', {'form':form})
+        return render(request, 'main/uploadquestion.html', {'form':form , 'tab':tpk , 'lession':lpk })
     def post(self,request):
         form = self.form_class(request.POST,request=self.request)
         if form.is_valid():
             if (form.cleaned_data['question'].strip() != '' and form.cleaned_data['answer'].strip() != ''):
                 form.save()
-              
-            lession=form.cleaned_data['lession']
-            tabs = form.cleaned_data['tab']
-            les = [ i.id for i in lession]
-            tab = [ i.id for i in tabs]
-            qns = Question.objects.update_or_create(question='questiontest',answer='answer')
-            qn = Question.objects.get(pk=qns.id)
-            qns.lession.add(*les)
-            qns.tab.add(*tab)
-
-            #index(request,lession,tab)
+            else:    
+                lession=form.cleaned_data['lession']
+                tabs = form.cleaned_data['tab']
+                CreateQuestionFromExcel(request,lession,tabs)
 
         return HttpResponseRedirect('/api/add/question')    
 
@@ -144,13 +176,13 @@ class TabCreateView(LoginRequiredMixin,CreateView):
         context["name"] = self.__class__.__name__
         return context
 def listTabs(request):
-    user = User.objects.get(email=request.user.email)
+    
     if request.user.is_authenticated:
         user = User.objects.get(email=request.user.email)
         data = list(Tab.objects.filter(useremail__exact=request.user.email).values())
     
         return JsonResponse({'result':data},safe=False)
-    data = ''
+    data = list(Tab.objects.all().values())
     
     return JsonResponse({'result':data},safe=False)          
 
@@ -176,10 +208,10 @@ class UserUpdateView(LoginRequiredMixin,UpdateView):
         return User.objects.get(email=self.request.user.email)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
+        form = PasswordChangeForm(self.request.user)
+        context['form1'] = form
         context["name"] = self.__class__.__name__
         return context
-
 
 
 def listCategorys(request):

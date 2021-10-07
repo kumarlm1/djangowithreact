@@ -48,7 +48,7 @@
   									{% csrf_token %}
  								 {% include 'main/bs4form.html' with form=form %}
 								  
-  								<center><button type="submit" class="btn btn-primary">Submit</button></center>
+  								<center><button type="submit" class="btn btn-primary">Update</button></center>
 								</form>
 								</div>
 							</div>
@@ -56,7 +56,7 @@
 
 							
 							</div>
-							<button class="btn btn-light">Cancel</button>
+						
 						
 					</div>
 					<div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
@@ -64,28 +64,27 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-								  	<label>Old password</label>
-								  	<input type="password" class="form-control">
+								  	 <form method="post" onSubmit="posts()" novalidate action="{% url 'pass' %}">
+  									{% csrf_token %}
+ 								 {% include 'main/bs4form.html' with form=form1 %}
+								  
+  								<center><button type="submit" class="btn btn-primary" onclick="posts()">Update</button></center>
+								</form>
+								<script>
+								function posts(){
+								$.ajax({
+									type : 'POST',
+									headers : { 'X-CSRFToken': "{{ csrf_token }}" },
+									url : " {% url 'pass' %} ",
+									data : { "{{ form1 }}"   }
+
+								})
+								}
+								</script>
 								</div>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-								  	<label>New password</label>
-								  	<input type="password" class="form-control">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-								  	<label>Confirm new password</label>
-								  	<input type="password" class="form-control">
-								</div>
-							</div>
-						</div>
-						<div>
-							<button class="btn btn-primary">Update</button>
-							<button class="btn btn-light">Cancel</button>
 						</div>
 					</div>
 					<div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">

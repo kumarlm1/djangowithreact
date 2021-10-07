@@ -55,6 +55,7 @@ class Question(models.Model):
 
     class Meta:
         unique_together=['question','answer']
+        pass
     def __str__(self):
         return str(self.id)
 
