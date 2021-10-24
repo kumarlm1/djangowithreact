@@ -2,8 +2,31 @@
 {% extends "main/base.html" %}
 {% load  static %}
 
-	{% block title%} Account Settings UI Design {% endblock%}
+	{% block title%}{{name}}
+	
+
+	 {% endblock%}
 {%block content%}
+{% load static%}
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
+	<script>
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDUdoFBLJA4PPgEY89ZwZb1OMQg4SO5FOU",
+  authDomain: "explore-81b2d.firebaseapp.com",
+  projectId: "explore-81b2d",
+  storageBucket: "explore-81b2d.appspot.com",
+  messagingSenderId: "297028201215",
+  appId: "1:297028201215:web:7083af8af39ed5e8dbbaca",
+  measurementId: "G-K9GCZLC8KX"
+};
+
+
+    firebase.initializeApp(firebaseConfig);
+</script>
+<script src="{% static 'main/NumberAuthentication.js' %}" type="text/javascript"></script>
+
 	<section class="py-5 my-5">
 		<div class="container">
 			<h1 class="mb-5">Account Settings</h1>
@@ -16,11 +39,11 @@
 						<h4 class="text-center">{{user.username}}</h4>
 					</div>
 					<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-						<a class="nav-link active" id="account-tab" data-toggle="pill" href="#account" role="tab" aria-controls="account" aria-selected="true">
+						<a class={% if not active == 2 %}"nav-link active" {% else %}"nav-link"{% endif %} id="account-tab" data-toggle="pill" href="#account" role="tab" aria-controls="account" aria-selected={% if not active == 2 %}"true" {% else %}"false"{% endif %}>
 							<i class="fa fa-home text-center mr-1"></i> 
 							Account
 						</a>
-						<a class="nav-link" id="password-tab" data-toggle="pill" href="#password" role="tab" aria-controls="password" aria-selected="false">
+						<a class={% if active == 2 %}"nav-link active" {% else %}"nav-link"{% endif %} id="password-tab" data-toggle="pill" href="#password" role="tab" aria-controls="password" aria-selected="false">
 							<i class="fa fa-key text-center mr-1"></i> 
 							Password
 						</a>
@@ -39,7 +62,7 @@
 					</div>
 				</div>
 				<div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
-					<div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
+					<div class={% if not active == 2 %} "tab-pane fade show active" {% else %}"tab-pane fade"{% endif %} id="account" role="tabpanel" aria-labelledby="account-tab">
 						<h3 class="mb-4">Account Settings</h3>
 							<div class="row">
 							<div class="col-md-6">
@@ -59,12 +82,12 @@
 						
 						
 					</div>
-					<div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+					<div class={% if active == 2 %} "tab-pane fade show active" {% else %}"tab-pane fade"{% endif %}  id="password" role="tabpanel" aria-labelledby="password-tab">
 						<h3 class="mb-4">Password Settings</h3>
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-								  	 <form method="post" onSubmit="posts()" novalidate action="{% url 'pass' %}">
+								  	 <form method="post" onSubmit="posts()" novalidate action="">
   									{% csrf_token %}
  								 {% include 'main/bs4form.html' with form=form1 %}
 								  
@@ -90,33 +113,27 @@
 					<div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
 						<h3 class="mb-4">Security Settings</h3>
 						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-								  	<label>Login</label>
-								  	<input type="text" class="form-control">
+							
+								{% if user.is_authenticated %}
+								{% if not user.isVerifiedMobile %}
+								<form class="form-control">
+    								<input type="text" id="number" value="+1 555-555-5555" class="form-control">
+    								<div id="recaptcha-container"></div>
+    								<button class="btn-primary" type="button" onclick="phoneAuth();">SendCode</button>
+								</form>
+								
+								<div id="otpverify" style="display:none">
+								<form>
+ 									<input class="form-control" type="text" id="verificationCode" placeholder="Enter verification code">
+   									 <button class="btn-primary" type="button" onclick="codeverify();">Verify code</button>
+								</form>
 								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-								  	<label>Two-factor auth</label>
-								  	<input type="text" class="form-control">
+								{% else %}
+								  <input  value="{{ user.phone }}" readonly>
+								{% endif %}
+								{% endif %}
 								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="" id="recovery">
-										<label class="form-check-label" for="recovery">
-										Recovery
-										</label>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div>
-							<button class="btn btn-primary">Update</button>
-							<button class="btn btn-light">Cancel</button>
-						</div>
+							
 					</div>
 					<div class="tab-pane fade" id="application" role="tabpanel" aria-labelledby="application-tab">
 						<h3 class="mb-4">Application Settings</h3>

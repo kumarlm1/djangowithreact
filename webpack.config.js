@@ -85,17 +85,17 @@ module.exports = {
         process: 'process/browser',
       }),
    
-    //   new webpack.optimize.AggressiveMergingPlugin() ,
+    // new webpack.optimize.AggressiveMergingPlugin() ,
     
-    //  new UglifyJSPlugin(),
+     // new UglifyJSPlugin(),
    // new BundleAnalyzerPlugin(),
     // new webpack.IgnorePlugin(/^\.\/locals$/,/moment$/),
     
     ],
-    optimization: {
-      minimize: true,
-      minimizer: [new TerserPlugin()],
-    },
+    // optimization: {
+    //   minimize: true,
+    //   minimizer: [new TerserPlugin()],
+    // },
     // optimization: {
     //   minimizer: [
     //     // we specify a custom UglifyJsPlugin here to get source maps in production

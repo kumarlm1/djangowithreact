@@ -4,6 +4,8 @@
         <title>
             {%block title%}{% endblock%}
         </title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% comment %} <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script> {% endcomment %}
      <link href="{% static "main/bootstrap.min.css" %}" rel="stylesheet" >
 <script src= "{% static "main/bootstrap.min.js" %}"   ></script>
@@ -20,9 +22,10 @@
         <link rel="stylesheet" type="text/css"
     href="{% static "reactfrontend/stylestinyfab.css" %}"/> 
 
-<link rel="stylesheet" type="text/css" href="{% static 'reactfrontend/styles1.css' %}"> 
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'reactfrontend/styles1.css' %}">  {% endcomment %}
     </head>
- <body style="margin-top: 30px;margin-left: 30px;">
+ <body style=" background-color: #4ca1af; 
+    overflow: auto;" >
 
   <style>
 
@@ -217,8 +220,8 @@
 
 
 
-    </style>
-<script>
+    </style> 
+ <script>
 $(function () {
     $(window).on('scroll', function () {
         if ( $(window).scrollTop() > 10 ) {
@@ -228,7 +231,7 @@ $(function () {
         }
     });
 });
-</script>
+</script> 
 
 
 
@@ -237,7 +240,7 @@ $(function () {
 
 
 
-<header class="header">
+
     <nav class="navbar navbar-expand-lg fixed-top py-3">
         <div class="container"><a href="#" class="navbar-brand text-uppercase font-weight-bold">Hi {{ user.username}}</a>
             <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"><i class="fa fa-bars"></i></button>
@@ -279,16 +282,53 @@ $(function () {
                 </ul>
             </div>
         </div>
-    </nav>
-</header>
+    </nav> 
+{% comment %} 
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top py-3">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Upload
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'createlession'  %}" target = "_blank">Tab</a></li>
+            <li><a class="dropdown-item" href="{% url 'createcategory'  %}" target = "_blank">Category</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'createquestion'  %}" target = "_blank">Questions</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled">Disabled</a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+ {% endcomment %}
+
+{%block content%}{% endblock%}
 
 
 
-
-
-<main>
-
-    <div class="container-fluid">
+    {% comment %} <div class="container-fluid">
  <div class="row">
     <div class="col bacc">
       Add
@@ -297,10 +337,12 @@ $(function () {
      
     {%block content%}{% endblock%}
      
-    </div>
+    
 </div>
-</div>
-</main>
+</div> {% endcomment %}
+
+
+
 </body>
 </html>
 

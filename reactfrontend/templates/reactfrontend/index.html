@@ -1,9 +1,21 @@
 {% extends "reactfrontend/base.html" %}
 
 {%block content%}
-   <div class="render" id="root">
+   <div class="container-fluid"  id="root" style="margin-top:10vh">
   </div> 
   {%load static%}
+  <script>
+    const  URLS_DATA = {
+       DJANGO : "{% url 'createlession' %}",
+     SAMPLE_API : 'https://api.randomuser.me/',
+     GET_LESSION :"{% url 'list_lession' %}",
+     GET_TAB : '/api/tab/',
+     GET_ANSWER : '/api/answer/',
+     GET_TABS : "{% url 'list_tab' %}",
+     GET_TABSs : "{% url 'list_tab_question' 1 1 %}"
+ }
+  </script>
   <script src="{% static 'reactfrontend/main.js' %}"></script> 
+  
  {%endblock%}
 

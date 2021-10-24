@@ -1,8 +1,11 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,AbstractUser
 # Create your models here.
+class User(AbstractUser):
+    phone = models.CharField(max_length=16,null=True,blank=True)
+    isVerifiedMobile = models.BooleanField(default=False)
 class Category(models.Model):
     useremail = models.EmailField(max_length=254,null=False)
     name = models.CharField(max_length=10,unique=True)

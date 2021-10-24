@@ -1,21 +1,28 @@
 from django.forms import ModelForm,Textarea,Form,ModelMultipleChoiceField
 from .models import Question,Tab,Lession,Category
 from django import forms
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from .models import User
 from django.contrib.auth.forms import PasswordChangeForm
 
 
 
 class UserUpdateForm(ModelForm):
-    def __init__(self, *args, **kwargs):
+    def __init__(self,*args, **kwargs):
         super(UserUpdateForm, self).__init__(*args, **kwargs)
         instance = getattr(self, 'instance', None)
         if instance and instance.pk:
             self.fields['last_login'].widget.attrs['readonly'] = True
+            self.fields['date_joined'].widget.attrs['readonly'] = True
     class Meta:
         model = User
-        fields = ['username','first_name','last_name','last_login']
-        
+        fields = ['username','first_name','last_name','last_login','date_joined']
+    # def get_context_data(self, **kwargs):
+    #     context = super(UserUpdateForm, self).get_context_data(**kwargs)
+    #     print(context)
+    #     return context  
+  
+
 
 class CustomLessionLabel(forms.ModelMultipleChoiceField):
     def label_from_instance(self, member):

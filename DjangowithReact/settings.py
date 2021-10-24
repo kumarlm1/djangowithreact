@@ -1,11 +1,9 @@
 
-
 from pathlib import Path
 import os
 import django_heroku
 
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 import logging
 LOGGING = {
@@ -24,19 +22,23 @@ LOGGING = {
     },
 }
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-x(z#pxw_u2ls294do1l-ehbmkhsu7fli&5ypsb4&%(-f8ur+=o'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = ['127.0.0.1','https://rocky-wildwood-16229.herokuapp.com']
+DEBUG = True
+ALLOWED_HOSTS = ['127.0.0.1','https://rocky-wildwood-16229.herokuapp.com','.ngrok.io']
 
 
-# Application definition
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# ACCOUNT_EMAIL_REQUIRED = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'noreplyqnpaper@gmail.com'
+DEFAULT_FROM_EMAIL = 'QnPaper'
+EMAIL_HOST_PASSWORD = 'rinrhjmiwovazmyn'
+
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -57,7 +59,19 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     'widget_tweaks',
     'django_extensions',
+    'wkhtmltopdf',
+  
+    
+    
 ]
+
+
+TWILIO_ACCOUNT_SID = 'ACa4534837b0fa935242b2f79e220a5642'
+TWILIO_AUTH_TOKEN = '4108466bf94855ccddce8b387bea4a55'
+
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -102,7 +116,7 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db1.sqlite3',
+        'NAME': BASE_DIR / 'db2.sqlite3',
     },
       "mongodb":{
         'ENGINE':'djongo',
@@ -206,3 +220,5 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+AUTH_USER_MODEL = 'main.User'
