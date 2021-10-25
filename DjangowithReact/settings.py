@@ -24,12 +24,11 @@ LOGGING = {
 
 
 SECRET_KEY = 'django-insecure-x(z#pxw_u2ls294do1l-ehbmkhsu7fli&5ypsb4&%(-f8ur+=o'
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['127.0.0.1','https://rocky-wildwood-16229.herokuapp.com','.ngrok.io']
 
 
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True

@@ -14,7 +14,7 @@ urlpatterns = [
     path('status',views.status),
     path('verifiedd',views.phoneVerify),
     path('verified',views.PhoneVerified,name="verified"),
-    # path('rep',HelloPDFView.as_view()),
+    path('deregister',views.PhoneDeVerify,name="deverify"),
     
     path('tab',views.listTabs,name="list_tab"),
     path('lession',views.listLessions,name="list_lession"),

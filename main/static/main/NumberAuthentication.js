@@ -1,5 +1,5 @@
 window.onload=function () {
-    console.log("loaded")
+//     console.log("loaded")
   render();
 };
 function render() {
@@ -7,19 +7,18 @@ function render() {
     recaptchaVerifier.render();
 }
 function phoneAuth() {
-    //get the number
+
     var number=document.getElementById('number').value;
-    //phone number authentication function of firebase
-    //it takes two parameter first one is number,,,second one is recaptcha
+
     firebase.auth().signInWithPhoneNumber(number,window.recaptchaVerifier).then(function (confirmationResult) {
         //s is in lowercase
         window.confirmationResult=confirmationResult;
         coderesult=confirmationResult;
         console.log(coderesult);
-        alert("Message sent");
+        
         document.getElementById('otpverify').style.display='block';
     }).catch(function (error) {
-        alert(error.message);
+        
     });
 }
 function codeverify() {
@@ -42,14 +41,15 @@ function codeverify() {
         }).then(response=>response.json()).then(data=>{
             
             if(data.result == 'success'){
-                alert("success");
+                
+                window.location.href += "#hjhj";
                 location.reload()
             }
         
         }).catch(console.error)
 
     }).catch(function (error) {
-        alert(error.message);
+        
     });
 }
 function sendnumber(){

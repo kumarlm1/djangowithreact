@@ -124,8 +124,6 @@ import json
 @csrf_exempt
 @login_required()
 def PhoneVerified(request):
-    
-
     if request.method == 'POST':
         print(request.POST)
         body_unicode = request.body.decode('utf-8')
@@ -163,7 +161,16 @@ def PhoneVerified(request):
 def phoneVerify(request):
     return render(request,'main/phoneverify.html')
 
-
+def PhoneDeVerify(request):
+    if request.user.is_authenticated:
+        user = User.objects.get(email=request.user.email)
+        
+        user.isVerifiedMobile = False
+        user.phone = ''
+        user.save()
+        
+        return HttpResponseRedirect('/api/user')
+    return HttpResponse('error',status=404)    
 
 
 

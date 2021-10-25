@@ -130,6 +130,7 @@ const firebaseConfig = {
 								</div>
 								{% else %}
 								  <input  value="{{ user.phone }}" readonly>
+								  <a class="btn-primary" href=" {% url 'deverify'  %} "> <button  >Deregister</button></a>
 								{% endif %}
 								{% endif %}
 								</div>
