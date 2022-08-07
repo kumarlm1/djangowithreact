@@ -66,18 +66,14 @@ class Question(models.Model):
         return reverse("createquestion")
         
         
-# class Setup(models.Model):
-#         user = models.ForeignKey(User,on_delete=models.CASCADE)
-#         name = models.CharField(max_length=250)
-#         description = models.TextField(blank=True,null=True)
-#         #tabs = models.ManyToManyField(Tab)
+class Photo(models.Model):
+    file = models.ImageField()
+    description = models.CharField(max_length=255, blank=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
-#         class Meta:
-#             unique_together = ['user','name']
-#             ordering = ['name']
-
-#         def __str__(self):
-#             return self.name        
+    class Meta:
+        verbose_name = 'photo'
+        verbose_name_plural = 'photos'      
 
 
 

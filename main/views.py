@@ -46,6 +46,64 @@ client = Client(account_sid, auth_token)
 
 
 
+from .models import Photo
+from .forms import PhotoForm
+
+def photo_list(request):
+    photos = Photo.objects.all()
+    if request.method == 'POST':
+        form = PhotoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('photo_list')
+    else:
+        form = PhotoForm()
+    return render(request, 'userprofile/photo_list.html', {'form': form, 'photos': photos})
+
+
+
+
+
+
+from docx import *
+from docx.shared import Inches
+
+def TestDocument(request):
+
+    document = Document()
+    docx_title="TEST_DOCUMENT.docx"
+    # ---- Cover Letter ----
+    #document.add_picture((r'%s/static/images/my-header.png' % (settings.PROJECT_PATH)), width=Inches(4))
+    document.add_paragraph()
+    document.add_paragraph("%s" % date.today().strftime('%B %d, %Y'))
+
+    document.add_paragraph('Dear Sir or Madam:')
+    document.add_paragraph('We are pleased to help you with your widgets.')
+    document.add_paragraph('Please feel free to contact me for any additional information.')
+    document.add_paragraph('I look forward to assisting you in this project.')
+
+    document.add_paragraph()
+    document.add_paragraph('Best regards,')
+    document.add_paragraph('Acme Specialist 1]')
+    document.add_page_break()
+
+    # Prepare document for download        
+    # -----------------------------
+    f = StringIO()
+    document.save(f)
+    length = f.tell()
+    f.seek(0)
+    response = HttpResponse(
+        f.getvalue(),
+        content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    )
+    response['Content-Disposition'] = 'attachment; filename=' + docx_title
+    response['Content-Length'] = length
+    return response
+
+
+
+
 
 
 @csrf_exempt

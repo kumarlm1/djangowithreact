@@ -8,6 +8,7 @@ from .import views
 urlpatterns = [
     # path('a',views.SampleUserView),
     path('',views.QuestionWithExcelCreateView.as_view(),name="myapp"),
+    path('profile',views.photo_list,name="photo_list"),
     path('pdf',views.GeneratePdf.as_view()),
     path('report',views.some_view),
     path('message',views.message),
@@ -15,6 +16,7 @@ urlpatterns = [
     path('verifiedd',views.phoneVerify),
     path('verified',views.PhoneVerified,name="verified"),
     path('deregister',views.PhoneDeVerify,name="deverify"),
+    path('pdfs',views.TestDocument),
     
     path('tab',views.listTabs,name="list_tab"),
     path('lession',views.listLessions,name="list_lession"),
